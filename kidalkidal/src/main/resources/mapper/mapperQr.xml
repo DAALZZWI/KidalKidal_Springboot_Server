@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+									"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+									
+<mapper namespace = "com.cos.kidalkidal.mapper.mapperQr">
+
+<resultMap id="resultQr" type="com.cos.kidalkidal.model.modelQr">
+
+    <id column="qrNumber" property="qrNumber" />
+    <result column="qrCompany" property="qrCompany" />
+ 	<result column="qrOwner" property="qrOwner" />
+</resultMap>
+
+	<select id = "qrSelectNumber" parameterType = "String"  resultType = "com.cos.kidalkidal.model.modelQr">
+		SELECT 	`qrNumber`,
+					`qrCompany`,
+					`qrOwner`
+		 FROM 	`kidalkidal`.`table_qr`
+	   WHERE	`qrOwner` = #{value}
+	</select>
+	
+	<select id = "qrSelectAll"  parameterType = "String"  resultMap= "resultQr">
+		SELECT 	`qrNumber`,
+					`qrCompany`,
+					`qrOwner`
+		 FROM 	`kidalkidal`.`table_qr`
+		 WHERE `qrCompany` = #{value};
+	ORDER BY   `qrNumber` DESC;
+	</select>
+	
+	<insert id = "qrInsert"  parameterType = "com.cos.kidalkidal.model.modelQr" >
+		INSERT INTO `kidalkidal`.`table_qr`
+		(
+			`qrNumber`,
+			`qrCompany`,
+			`qrOwner`
+		)
+		VALUES
+		(
+			#{qrNumber},
+			#{qrCompany},
+			#{qrOwner}
+		)
+	</insert>
+
+	<delete id="qrDelete"  parameterType = "String" >
+		DELETE FROM 	`kidalkidal`.`table_qr`
+		        WHERE 	`qrOwner` = #{value}
+	</delete>	
+	
+</mapper>

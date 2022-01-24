@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+									"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+									
+<mapper namespace = "com.cos.kidalkidal.mapper.mapperUser">
+	
+	<select id = "userSelect"  parameterType = "String"  resultType= "com.cos.kidalkidal.model.modelUser" >
+		SELECT 	`userPk`,
+					`userId`,
+					`userPassword`,
+					`userName`,
+					`userEmail`,
+					`userRegisterDate`,
+					`userStatus`,
+					`userImage`
+		  FROM 	`kidalkidal`.`table_user`
+	    WHERE 	`userEmail` = #{value}
+	</select>
+		
+	<select id = "userSelectByToken"  parameterType = "String"  resultType= "com.cos.kidalkidal.model.modelUser" >
+		SELECT 	`userPk`,
+					`userId`,
+					`userPassword`,
+					`userName`,
+					`userEmail`,
+					`userRegisterDate`,
+					`userStatus`,
+					`userImage`
+		  FROM 	`kidalkidal`.`table_user`
+	    WHERE 	`userTokenAccess` = #{value}
+	</select>
+	
+	<select id = "userSelectImage"  parameterType = "String"  resultType= "com.cos.kidalkidal.model.modelUserImage" >
+		SELECT 	`userImage`
+		  FROM 	`kidalkidal`.`table_user`
+	    WHERE 	`userEmail` = #{value}
+	</select>
+	
+	<select id="userSelectFindEmail"  parameterType = "String" resultType = "String" >
+		SELECT 	`userEmail`
+		  FROM 	`kidalkidal`.`table_user`
+	    WHERE 	`userName` = #{value}
+	</select>	
+	
+	
+	<insert id = "userInsert"  parameterType = "com.cos.kidalkidal.model.modelUser" >
+		INSERT INTO `kidalkidal`.`table_user`
+		(
+		`userPk`,
+		`userId`,
+		`userPassword`,
+		`userName`,
+		`userEmail`,
+		`userRegisterDate`,
+		`userStatus`,
+		`userImage`
+		)
+		VALUES
+		(
+		#{userPk},
+		#{userId},
+		#{userPassword},
+		#{userName},
+		#{userEmail},
+		#{userRegisterDate},
+		#{userStatus},
+		#{userImage}
+		)
+	</insert>
+	
+	<update id="userUpdate"  parameterType = "hashmap">
+		UPDATE `kidalkidal`.`table_user`
+			  SET	`userPk` = #{modelUser.userPk},
+			  		`userId` = #{modelUser.userId},
+					`userPassword` = #{modelUser.userPassword},
+					`userName` = #{modelUser.userName},
+					`userEmail` = #{modelUser.userEmail},
+					`userRegisterDate` = #{modelUser.userRegisterDate},
+					`userStatus` = #{modelUser.userStatus},
+					`userImage` = #{modelUser.userImage}
+		 WHERE  `userEmail` = #{targetEmail}
+	</update>
+	
+	<delete id="userDelete"  parameterType = "String">
+		DELETE FROM `kidalkidal`.`table_user`
+		WHERE `userEmail` = #{value}
+	</delete>
+
+</mapper>									

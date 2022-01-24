@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+									"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+									
+<mapper namespace = "com.cos.kidalkidal.mapper.mapperDesk">
+	
+<resultMap id="resultDesk" type="com.cos.kidalkidal.model.modelDesk">
+
+   <id column="deskId" property="deskId" />
+   <result column="deskTitle" property="deskTitle" />
+   <result column="deskSubTitle" property="deskSubTitle" />
+   <result column="deskWriter" property="deskWriter" />
+   <result column="deskRegisterDate" property="deskRegisterDate" />
+   <result column="deskVisible" property="deskVisible" />
+   <result column="deskStatus" property="deskStatus" />
+   <result column="deskSee" property="deskSee" />
+   <result column="deskImage" property="deskImage" />
+</resultMap>
+	
+	<select id = "deskSelect" parameterType = "Int"  resultType = "com.cos.kidalkidal.model.modelDesk">
+		SELECT 	`deskWriter`,
+					`deskTitle`,
+					`deskSubTitle`,
+					`deskId`,
+					`deskRegisterDate`,
+					`deskVisible`,
+					`deskStatus`,
+					`deskSee`
+		 FROM 	`kidalkidal`.`table_desk`
+	   WHERE	`deskId` = #{value}
+	</select>
+	
+	<select id = "deskSelectAll"  resultMap= "resultDesk">
+		SELECT 	`deskWriter`,
+					`deskTitle`,
+					`deskSubTitle`,
+					`deskId`,
+					`deskRegisterDate`,
+					`deskVisible`,
+					`deskStatus`,
+					`deskSee`
+		 FROM 	`kidalkidal`.`table_desk`
+	ORDER BY   `deskId` DESC;
+	</select>
+	
+	<insert id = "deskInsert"  parameterType = "com.cos.kidalkidal.model.modelDesk" >
+		INSERT INTO 	`kidalkidal`.`table_desk`
+		(
+							`deskWriter`,
+							`deskTitle`,
+							`deskSubTitle`,
+							`deskId`,
+							`deskRegisterDate`,
+							`deskVisible`,
+							`deskStatus`,
+							`deskSee`
+		)
+		VALUES
+		(
+							#{deskWriter},
+							#{deskTitle},
+							#{deskSubTitle},
+							#{deskId},
+							#{deskRegisterDate},
+							#{deskVisible},
+							#{deskStatus},
+							#{deskSee}
+		)
+	</insert>
+	
+	<update id="deskUpdate"  parameterType = "hashmap">
+
+	</update>	
+
+	<update id="deskUpdateIncrease"  parameterType = "Int">
+		UPDATE 		`kidalkidal`.`table_desk`
+    	      SET 		`deskSee` = `deskSee` + 1
+    	 WHERE 		`deskId` = #{value}
+	</update>	
+
+	<delete id="deskDeleteById"  parameterType = "Int">
+		DELETE FROM 	`kidalkidal`.`table_desk`
+		WHERE 			`deskId` = #{value}
+	</delete>	
+
+	<delete id="deskDeleteByWriter"  parameterType = "String">
+
+	</delete>
+
+</mapper>								
